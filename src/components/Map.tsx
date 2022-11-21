@@ -30,8 +30,6 @@ const Map = () => {
 
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
-  const [map, setMap] = useState(null);
-
   const mapRef = useRef<GoogleMap>();
 
   const userLocation = useGeoLocation();
@@ -50,7 +48,6 @@ const Map = () => {
       useGeoLocation;
     }
     fetchGPSData();
-
     const interval = setInterval(() => {
       {
         useGeoLocation;
@@ -78,13 +75,23 @@ const Map = () => {
                 lng: parseFloat(marker.lng),
               }}
               key={parseFloat(marker.node)}
-              icon="src\assets\avaliable.svg"
+              icon={{
+                url: "src/assets/avaliable.svg",
+                scaledSize: new window.google.maps.Size(25, 25),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(10, 10),
+              }}
             />
           );
         })}
         <Marker
           position={userLocation.position}
-          icon="src\assets\userpin.svg"
+          icon={{
+            url: "src/assets/user.svg",
+            scaledSize: new window.google.maps.Size(40, 40),
+            origin: new window.google.maps.Point(0, 0),
+            anchor: new window.google.maps.Point(10, 10),
+          }}
         />
       </GoogleMap>
     </div>
