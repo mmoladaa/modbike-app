@@ -42,18 +42,21 @@ const Map = () => {
     >();
 
   useEffect(() => {
+    const fetchGPSData = async () => {
+      const resultAwait = await axios.get("https://iot.encall.space/view.php");
+      setMarkers(resultAwait.data.markers);
+    };
     {
       useGeoLocation;
     }
-    axios.get("https://iot.encall.space/view.php").then((response) => {
-      setMarkers(response.data.markers);
-    });
+    fetchGPSData();
+
     const interval = setInterval(() => {
-      axios.get("https://iot.encall.space/view.php").then((response) => {
-        setMarkers(response.data.markers);
-      });
-      console.log("====================================");
-    }, 10000); // 10000ms
+      {
+        useGeoLocation;
+      }
+      fetchGPSData();
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -75,10 +78,14 @@ const Map = () => {
                 lng: parseFloat(marker.lng),
               }}
               key={parseFloat(marker.node)}
+              icon="src\assets\avaliable.svg"
             />
           );
         })}
-        <Marker position={userLocation.position} />
+        <Marker
+          position={userLocation.position}
+          icon="src\assets\userpin.svg"
+        />
       </GoogleMap>
     </div>
   ) : (
