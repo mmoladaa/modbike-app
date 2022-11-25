@@ -76,7 +76,7 @@ const Map = () => {
               }}
               key={parseFloat(marker.node)}
               icon={{
-                url: "src/assets/avaliable.svg",
+                url: "avaliable.svg",
                 scaledSize: new window.google.maps.Size(25, 25),
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(10, 10),
@@ -87,7 +87,7 @@ const Map = () => {
         <Marker
           position={userLocation.position}
           icon={{
-            url: "src/assets/user.svg",
+            url: "user.svg",
             scaledSize: new window.google.maps.Size(40, 40),
             origin: new window.google.maps.Point(0, 0),
             anchor: new window.google.maps.Point(10, 10),
