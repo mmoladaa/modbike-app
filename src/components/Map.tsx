@@ -28,7 +28,7 @@ const Map = () => {
     []
   );
 
-  const onLoad = useCallback((map) => (mapRef.current = map), []);
+  const onLoad = useCallback((map: any) => (mapRef.current = map), []);
 
   const mapRef = useRef<GoogleMap>();
 
