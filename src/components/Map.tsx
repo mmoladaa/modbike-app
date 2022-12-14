@@ -98,12 +98,10 @@ const Map = () => {
         />
       </GoogleMap>
       <div className="fixed bottom-60 right-0 pr-4 pb-4">
-        <Button onClick={() => {
+        <img src="reset.svg" onClick={() => {
               map.panTo({lat: userLocation.position.lat, lng: userLocation.position.lng});
               map.setZoom(18);
-            }} >
-          Center
-        </Button>
+            }} />
       </div>
     </div>
 
