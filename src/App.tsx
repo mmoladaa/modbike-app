@@ -7,7 +7,6 @@ import {
 import Bicycle_data from "./components/bicycle_card";
 import Home from "./pages/home";
 import { ChakraProvider } from "@chakra-ui/react";
-
 const App = () => {
   return(
     <div>
