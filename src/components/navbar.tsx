@@ -5,14 +5,11 @@ export default function NavBar() {
   const [navbar, setNavbar] = useState(false);
 
   return (
-    <nav className="z-20 fixed w-full bg-white">
-      <div className="justify-between  mx-auto shadow-xl md:items-center md:flex md:px-8">
+    <nav className="w-full bg-white shadow-xl">
+      <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
-          <div className="flex items-center justify-between px-3 py-3 md:py-5 md:block">
-            <a href="javascript:void(0)" className="w-16">
-              <img src="/modbikeLogo.svg" alt="MODBIKE" />
-              {/* <svg xmlns="http://www.w3.org/2000/svg"></svg> */}
-            </a>
+          <div className="flex items-center justify-between py-3 md:py-5 md:block">
+            <img src="modbikeLogo.svg" width={80} />
             <div className="md:hidden">
               <button
                 className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
@@ -53,18 +50,19 @@ export default function NavBar() {
         </div>
         <div>
           <div
-            className={`flex-1 justify-self-center pb-5 pt-5 md:block md:pb-0 md:mt-0 bg-gradient-to-r from-[#FC855B] to-[#F8DD58] ${
+            className={`flex-1 justify-self-center pb-8 mt-8 md:block md:pb-0 md:mt-0 ${
               navbar ? "block" : "hidden"
             }`}
           >
-            <ul className="items-center justify-center space-y-8 font-Poppins font-medium text-center">
-              <li className="text-white">
+            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 font-Poppins font-bold ">
+              <li className="bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
                 <Link to="/">Home</Link>
               </li>
-              <li className="text-white">
-                <Link to="" className="cursor-not-allowed">
-                  Coming Soon
-                </Link>
+              <li className="bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
+                <Link to="/">coming soon</Link>
+              </li>
+              <li className="bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
+                <Link to="/">Log in</Link>
               </li>
             </ul>
           </div>
