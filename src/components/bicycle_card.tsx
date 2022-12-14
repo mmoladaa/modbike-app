@@ -37,7 +37,10 @@ const Bicycle_data = () => {
       {bicycleData?.map((bicycleMap) => (
 
         <div key={bicycleMap.bicycle_ID} >
-          {React.createElement(Card_modal, { bikeID: bicycleMap.bicycle_ID, status: bicycleMap.status })}
+          
+          {bicycleMap.status == "available"?React.createElement(Card_modal, { bikeID: bicycleMap.bicycle_ID, status: bicycleMap.status }) : null
+          
+      }
         </div>
       ))}
       </Flex> 
