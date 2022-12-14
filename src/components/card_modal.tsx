@@ -59,7 +59,7 @@ const card_modal = ({ bikeID, status }: Props) => {
       <link href='https://css.gg/shape-circle.css' rel='stylesheet'></link>
       <div onClick={onOpen}>
         <div className=" flex-nowrap" color="white">
-          <Card variant="filled" m={4} w={256} borderRadius="20" shadow-2xl>
+          <Card variant="filled" m={4} w={200} borderRadius="20" shadow-2xl>
             <CardHeader>
               <HStack>
                 <Icon viewBox='0 0 200 200' color='#00CA5F' boxSize={6}>
