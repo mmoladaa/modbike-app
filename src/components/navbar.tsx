@@ -65,7 +65,7 @@ export default function NavBar() {
                 <Link to="/">coming soon</Link>
               </li>
               <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
-                <Button bgGradient="linear(to-r, #FC855B, #F8D658)" _hover={{ transform: "scale(1.2)" }}>Log in</Button>
+                <Button bgGradient="linear(to-r, #FC855B, #F8D658)" _hover={{ transform: "scale(1.2)" }} onClick={() => loginWithRedirect()}>Log in</Button>
               </li>
             </ul>
           </div>
