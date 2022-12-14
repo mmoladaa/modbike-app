@@ -75,11 +75,11 @@ const card_modal = ({ bikeID, status }: Props) => {
 
             </CardHeader>
             <CardBody>
-              <VStack>
+              {/* <VStack> */}
 
-              <Text as='abbr' fontSize='md'>Bicycle ID</Text>
+              {/* <Text as='abbr' fontSize='md'>Bicycle ID</Text> */}
               <Text as='b' fontSize='3xl'>{bikeID}</Text>
-              </VStack>
+              {/* </VStack> */}
               
             </CardBody>
             <CardFooter></CardFooter>
