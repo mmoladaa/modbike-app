@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 
 export default function NavBar() {
   const [navbar, setNavbar] = useState(false);
+  const { loginWithRedirect } = useAuth0();
 
   return (
-    <nav className="w-full bg-white shadow-xl">
+    <nav className="fixed z-50 w-full bg-white shadow-xl">
       <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -61,8 +64,8 @@ export default function NavBar() {
               <li className="bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
                 <Link to="/">coming soon</Link>
               </li>
-              <li className="bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
-                <Link to="/">Log in</Link>
+              <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
+                <Button bgGradient="linear(to-r, #FC855B, #F8D658)" _hover={{ transform: "scale(1.2)" }}>Log in</Button>
               </li>
             </ul>
           </div>
