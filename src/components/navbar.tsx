@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
 
 export default function NavBar() {
   const [navbar, setNavbar] = useState(false);
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+  const logoutWithRedirect = () =>
+    logout({
+      returnTo: window.location.origin,
+    });
 
   return (
-    <nav className="z-20 fixed w-full bg-white">
-      <div className="justify-between  mx-auto shadow-xl md:items-center md:flex md:px-8">
+    <nav className="fixed z-50 w-full bg-white shadow-xl">
+      <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
-          <div className="flex items-center justify-between px-3 py-3 md:py-5 md:block">
-            <a href="javascript:void(0)" className="w-16">
-              <img src="./public/logo.svg" alt="MODBIKE" />
-              {/* <svg xmlns="http://www.w3.org/2000/svg"></svg> */}
-            </a>
+          <div className="flex items-center justify-between py-3 md:py-5 md:block">
+            <img src="modbikeLogo.svg" width={80} />
             <div className="md:hidden">
               <button
                 className="p-2 text-gray-700 rounded-md outline-none focus:border-gray-400 focus:border"
@@ -53,19 +58,45 @@ export default function NavBar() {
         </div>
         <div>
           <div
-            className={`flex-1 justify-self-center pb-5 pt-5 md:block md:pb-0 md:mt-0 bg-gradient-to-r from-[#FC855B] to-[#F8DD58] ${
+            className={`flex-1 justify-self-center pb-8 mt-8 md:block md:pb-0 md:mt-0 ${
               navbar ? "block" : "hidden"
             }`}
           >
-            <ul className="items-center justify-center space-y-8 font-Poppins font-medium text-center">
-              <li className="text-white">
+            <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 font-Poppins font-bold ">
+              <li className="text-black">
                 <Link to="/">Home</Link>
               </li>
-              <li className="text-white">
-                <Link to="" className="cursor-not-allowed">
-                  Coming Soon
-                </Link>
+              <li className="text-black">
+                <Link to="/">coming soon</Link>
               </li>
+              {!isAuthenticated && (
+                <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
+                  <Button
+                    bgGradient="linear(to-r, #FC855B, #F8D658)"
+                    _hover={{ transform: "scale(1.2)" }}
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Log in
+                  </Button>
+                </li>
+              )}
+              {isAuthenticated && (
+                <p className="font-black bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
+                  {user.name}
+                </p>
+              )}
+              {isAuthenticated && (
+                <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
+                  <Button
+                    variant="outline"
+                    colorScheme="yellow"
+                    _hover={{ transform: "scale(0.98)" }}
+                    onClick={() => logoutWithRedirect()}
+                  >
+                    Log Out
+                  </Button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
