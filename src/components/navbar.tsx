@@ -5,7 +5,12 @@ import { Button, ButtonGroup } from "@chakra-ui/react";
 
 export default function NavBar() {
   const [navbar, setNavbar] = useState(false);
-  const { loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+
+  const logoutWithRedirect = () =>
+    logout({
+      returnTo: window.location.origin,
+    });
 
   return (
     <nav className="fixed z-50 w-full bg-white shadow-xl">
@@ -58,15 +63,40 @@ export default function NavBar() {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0 font-Poppins font-bold ">
-              <li className="bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
+              <li className="text-black">
                 <Link to="/">Home</Link>
               </li>
-              <li className="bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
+              <li className="text-black">
                 <Link to="/">coming soon</Link>
               </li>
-              <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
-                <Button bgGradient="linear(to-r, #FC855B, #F8D658)" _hover={{ transform: "scale(1.2)" }} onClick={() => loginWithRedirect()}>Log in</Button>
-              </li>
+              {!isAuthenticated && (
+                <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
+                  <Button
+                    bgGradient="linear(to-r, #FC855B, #F8D658)"
+                    _hover={{ transform: "scale(1.2)" }}
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Log in
+                  </Button>
+                </li>
+              )}
+              {isAuthenticated && (
+                <p className="font-black bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
+                  {user.name}
+                </p>
+              )}
+              {isAuthenticated && (
+                <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
+                  <Button
+                    variant="outline"
+                    colorScheme="yellow"
+                    _hover={{ transform: "scale(0.98)" }}
+                    onClick={() => logoutWithRedirect()}
+                  >
+                    Log Out
+                  </Button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
