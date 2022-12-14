@@ -23,6 +23,7 @@ import {
   AlertDialogOverlay,
   HStack,
   Icon,
+  VStack,
 
 } from "@chakra-ui/react";
 type Props = {
@@ -68,15 +69,18 @@ const card_modal = ({ bikeID, status }: Props) => {
                   />
                 </Icon>
                 <Heading as="h4" size="xs">
-
                   {status.toUpperCase()}
                 </Heading>
               </HStack>
 
             </CardHeader>
             <CardBody>
-              {/* <h1>{bikeID}</h1> */}
-              <Text as='b' fontSize='6xl'>{bikeID}</Text>
+              <VStack>
+
+              <Text as='abbr' fontSize='md'>Bicycle ID</Text>
+              <Text as='b' fontSize='3xl'>{bikeID}</Text>
+              </VStack>
+              
             </CardBody>
             <CardFooter></CardFooter>
           </Card>
