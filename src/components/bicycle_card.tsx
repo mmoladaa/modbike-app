@@ -5,6 +5,10 @@ import React, {
   useRef,
   useEffect,
 } from "react";
+import {
+  Flex,
+
+} from "@chakra-ui/react";
 import axios from "axios";
 
 import Card_modal from "./card_modal";
@@ -27,14 +31,16 @@ const Bicycle_data = () => {
   }, []);
 
   return (
-
+    
     <div>
+      <Flex w="100vw" h="60vh" overflowY="scroll"> 
       {bicycleData?.map((bicycleMap) => (
 
         <div key={bicycleMap.bicycle_ID} >
           {React.createElement(Card_modal, { bikeID: bicycleMap.bicycle_ID, status: bicycleMap.status })}
         </div>
       ))}
+      </Flex> 
     </div>
   );
 };
