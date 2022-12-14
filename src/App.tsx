@@ -5,6 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import Bicycle_data from "./components/bicycle_card";
+import Home from "./pages/home";
 import { ChakraProvider } from "@chakra-ui/react";
 
 const App = () => {
@@ -13,7 +14,8 @@ const App = () => {
       <ChakraProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Map />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/bicycle" element={<Bicycle_data />} />
         </Routes>
       </BrowserRouter>

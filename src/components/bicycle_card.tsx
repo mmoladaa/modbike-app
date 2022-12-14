@@ -1,8 +1,5 @@
 import React, {
   useState,
-  useMemo,
-  useCallback,
-  useRef,
   useEffect,
 } from "react";
 import axios from "axios";
@@ -13,6 +10,8 @@ import {
   CardFooter,
   Heading,
   Text,
+  Button,
+  Flex,
 } from "@chakra-ui/react";
 
 const Bicycle_data = () => {
@@ -34,9 +33,11 @@ const Bicycle_data = () => {
   }, []);
 
   return (
-    <div>
+    <div className="">
+      <Flex w="100vw" h="100vh" overflowY="scroll">
       {bicycleData?.map((bicycleMap) => (
-        <Card key={bicycleMap.bicycle_ID}>
+        <div className=" flex-nowrap">
+        <Card key={bicycleMap.bicycle_ID} variant="filled" m={4} w={256}> 
           <CardHeader>
             <Heading as="h4" size="md">
               {bicycleMap.bicycle_ID}
@@ -45,9 +46,13 @@ const Bicycle_data = () => {
           <CardBody>
             <Text>{bicycleMap.status}</Text>
           </CardBody>
-          <CardFooter></CardFooter>
+          <CardFooter>
+            <Button>Book</Button>
+          </CardFooter>
         </Card>
+        </div>
       ))}
+      </Flex>
     </div>
   );
 };

@@ -56,9 +56,8 @@ const Map = () => {
     }, 10000);
     return () => clearInterval(interval);
   }, []);
-
   return isLoaded ? (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen absolute">
       {/* {console.log(markers)} */}
       <GoogleMap
         mapContainerStyle={{ height: "100%", width: "100%" }}
