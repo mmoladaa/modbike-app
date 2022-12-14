@@ -82,7 +82,7 @@ export default function NavBar() {
               )}
               {isAuthenticated && (
                 <p className="font-black bg-clip-text text-transparent bg-[#FC855B] hover:text-[#F8D658]">
-                  {user.name}
+                  {user?.name}
                 </p>
               )}
               {isAuthenticated && (
