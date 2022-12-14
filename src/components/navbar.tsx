@@ -10,7 +10,7 @@ export default function NavBar() {
         <div>
           <div className="flex items-center justify-between px-3 py-3 md:py-5 md:block">
             <a href="javascript:void(0)" className="w-16">
-              <img src="./public/logo.svg" alt="MODBIKE" />
+              <img src="./public/modbikeLogo.svg" alt="MODBIKE" />
               {/* <svg xmlns="http://www.w3.org/2000/svg"></svg> */}
             </a>
             <div className="md:hidden">
