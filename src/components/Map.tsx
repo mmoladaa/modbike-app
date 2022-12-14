@@ -26,6 +26,7 @@ const Map = () => {
       streetViewControl: false,
       mapTypeControl: false,
       disableDefaultUI: true,
+      gestureHandling: "greedy",
     }),
     []
   );
