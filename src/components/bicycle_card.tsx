@@ -34,7 +34,7 @@ const Bicycle_data = () => {
 
   return (
     <div className="">
-      <Flex w="100vw" h="100vh" overflowY="scroll">
+      <Flex w="100vw" h="60vh" overflowY="scroll">
       {bicycleData?.map((bicycleMap) => (
         <div className=" flex-nowrap">
         <Card key={bicycleMap.bicycle_ID} variant="filled" m={4} w={256}> 

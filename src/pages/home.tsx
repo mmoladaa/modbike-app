@@ -6,12 +6,15 @@ const Home = () => {
   return (
     <div>
       <div className="">
-          <div className="z-0">
-            <Map/>
-          </div>
-          <div className="z-50 left-8 top-8">
+        <div className="z-0">
+          <Map />
+        </div>
+          <div className="w-full h-0 fixed left-0 bottom-0
+            flex justify-center items-center
+            " >
             <Bicycle_card />
-          </div>
+          
+        </div>
       </div>
     </div>
   );
