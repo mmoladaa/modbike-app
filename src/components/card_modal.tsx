@@ -44,7 +44,7 @@ const card_modal = ({ bikeID, status }: Props) => {
   return (
     <div>
       <div onClick={onOpen}>
-      <Flex w="100vw" h="60vh" overflowY="scroll">
+      {/* <Flex w="100vw" h="60vh" overflowY="scroll"> */}
       <div className=" flex-nowrap">
         <Card variant="filled" m={4} w={256}>
           <CardHeader>
@@ -58,7 +58,7 @@ const card_modal = ({ bikeID, status }: Props) => {
           <CardFooter></CardFooter>
         </Card>
         </div>
-      </Flex>
+      {/* </Flex> */}
       </div>
 
         
