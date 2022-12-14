@@ -1,21 +1,19 @@
 import React, {
   useState,
+  useMemo,
+  useCallback,
+  useRef,
   useEffect,
 } from "react";
-import axios from "axios";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Heading,
-  Text,
-  Button,
   Flex,
+
 } from "@chakra-ui/react";
+import axios from "axios";
 
+import Card_modal from "./card_modal";
+// import cardM from "./components/bicycle_cards";
 const Bicycle_data = () => {
-
   const [bicycleData, setBicycleData] = useState<{ ID: string; bicycle_ID: string; status: string }[]>();
 
   useEffect(() => {
@@ -33,26 +31,16 @@ const Bicycle_data = () => {
   }, []);
 
   return (
-    <div className="">
-      <Flex w="100vw" h="60vh" overflowY="scroll">
+    
+    <div>
+      <Flex w="100vw" h="60vh" overflowY="scroll"> 
       {bicycleData?.map((bicycleMap) => (
-        <div className=" flex-nowrap">
-        <Card key={bicycleMap.bicycle_ID} variant="filled" m={4} w={256}> 
-          <CardHeader>
-            <Heading as="h4" size="md">
-              {bicycleMap.bicycle_ID}
-            </Heading>
-          </CardHeader>
-          <CardBody>
-            <Text>{bicycleMap.status}</Text>
-          </CardBody>
-          <CardFooter>
-            <Button>Book</Button>
-          </CardFooter>
-        </Card>
+
+        <div key={bicycleMap.bicycle_ID} >
+          {React.createElement(Card_modal, { bikeID: bicycleMap.bicycle_ID, status: bicycleMap.status })}
         </div>
       ))}
-      </Flex>
+      </Flex> 
     </div>
   );
 };

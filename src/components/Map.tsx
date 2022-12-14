@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import useGeoLocation from "../hooks/useGeoLocation";
+import { Button } from "@chakra-ui/react";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
@@ -24,6 +25,7 @@ const Map = () => {
       mapId: "65ffcf93cf012c75",
       streetViewControl: false,
       mapTypeControl: false,
+      disableDefaultUI: true,
     }),
     []
   );
@@ -33,6 +35,8 @@ const Map = () => {
   const mapRef = useRef<GoogleMap>();
 
   const userLocation = useGeoLocation();
+
+  const map:any = mapRef.current;
 
   const [markers, setMarkers] =
     useState<
@@ -93,7 +97,17 @@ const Map = () => {
           }}
         />
       </GoogleMap>
+      <div className="fixed bottom-60 right-0 pr-4 pb-4">
+        <Button onClick={() => {
+              map.panTo({lat: userLocation.position.lat, lng: userLocation.position.lng});
+              map.setZoom(18);
+            }} >
+          Center
+        </Button>
+      </div>
     </div>
+
+    
   ) : (
     <>abc</>
   );
