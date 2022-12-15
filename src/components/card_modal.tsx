@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Card,
   CardHeader,
@@ -24,20 +24,19 @@ import {
   HStack,
   Icon,
   VStack,
-
 } from "@chakra-ui/react";
 type Props = {
-  bikeID: string,
-  status: string
-}
-import { useRef } from 'react';
-import axios from 'axios';
+  bikeID: string;
+  status: string;
+};
+import { useRef } from "react";
+import axios from "axios";
 // import { useState } from 'react';
 
 // const [book, setBook] = useState();
 
 const card_modal = ({ bikeID, status }: Props) => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   // const cancelRef = React.useRef()
   const cancelRef = useRef<HTMLButtonElement>(null);
   // const d: Date = new Date();
@@ -49,45 +48,62 @@ const card_modal = ({ bikeID, status }: Props) => {
     let fData = new FormData();
     fData.append("bicycle_id", bikeID);
     fData.append("bicycle_status", "booked");
-    fData.append("time", d.toISOString().split('T')[0] + ' ' + d.toTimeString().split(' ')[0]);
+    fData.append(
+      "time",
+      d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+    );
     fData.append("user_id", "Kittipong");
-    axios.post(url, fData).then(response => alert(response.data));
-    console.log(d.toISOString().split('T')[0] + ' ' + d.toTimeString().split(' ')[0]);
+    axios.post(url, fData).then((response) => alert(response.data));
+    console.log(
+      d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+    );
   };
   return (
     <div>
-      <link href='https://css.gg/shape-circle.css' rel='stylesheet'></link>
+      <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
       <div onClick={onOpen}>
-        <div className=" flex-nowrap " >
-          <Card bg="white" variant="filled" m={4} w={200} borderRadius="20" shadow-2xl>
+        <div className=" flex-nowrap ">
+          <Card
+            bg="white"
+            variant="filled"
+            m={4}
+            w={200}
+            borderRadius="20"
+            shadow-3xl
+          >
             <CardHeader>
               <HStack>
-                <Icon viewBox='0 0 200 200' color='#00CA5F' boxSize={6}>
+                <Icon
+                  viewBox="0 0 200 200"
+                  color="#FFFFFF"
+                  stroke="#00CA5F"
+                  stroke-width="40"
+                  boxSize={6}
+                >
                   <path
-                    fill='currentColor'
-                    d='M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0'
+                    fill="currentColor"
+                    d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
                   />
                 </Icon>
                 <Heading as="h4" size="xs">
                   {status.toUpperCase()}
                 </Heading>
               </HStack>
-
             </CardHeader>
             <CardBody>
               {/* <VStack> */}
 
               {/* <Text as='abbr' fontSize='md'>Bicycle ID</Text> */}
-              <Text as='b' fontSize='3xl'>{bikeID}</Text>
+              <Text as="b" fontSize="3xl">
+                {bikeID}
+              </Text>
               {/* </VStack> */}
-              
             </CardBody>
             <CardFooter></CardFooter>
           </Card>
         </div>
         {/* </Flex> */}
       </div>
-
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -99,16 +115,17 @@ const card_modal = ({ bikeID, status }: Props) => {
             <Text>status {status}</Text>
             <Text>do you want to use this bicycle?</Text>
             {/* <Button colorScheme='orange' onClick={passstatus}>book this bike</Button> */}
-            <Button colorScheme='red' onClick={onOpen}>Delete Customer</Button>
+            <Button colorScheme="red" onClick={onOpen}>
+              Delete Customer
+            </Button>
             <AlertDialog
               isOpen={isOpen}
               leastDestructiveRef={cancelRef}
               onClose={onClose}
             >
-
               <AlertDialogOverlay>
                 <AlertDialogContent>
-                  <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                  <AlertDialogHeader fontSize="lg" fontWeight="bold">
                     Delete Customer
                   </AlertDialogHeader>
 
@@ -120,7 +137,7 @@ const card_modal = ({ bikeID, status }: Props) => {
                     <Button ref={cancelRef} onClick={onClose}>
                       Cancel
                     </Button>
-                    <Button colorScheme='red' onClick={onClose} ml={3}>
+                    <Button colorScheme="red" onClick={onClose} ml={3}>
                       Delete
                     </Button>
                   </AlertDialogFooter>
@@ -130,17 +147,14 @@ const card_modal = ({ bikeID, status }: Props) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
     </div>
+  );
+};
 
-  )
-}
-
-export default card_modal
-
-
+export default card_modal;
