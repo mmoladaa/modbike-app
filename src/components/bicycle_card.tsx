@@ -12,7 +12,7 @@ import useGeoLocation from "../hooks/useGeoLocation";
 const Bicycle_data = () => {
   const userLocation = useGeoLocation();
   var x = 0;
-  const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { user, isAuthenticated} = useAuth0();
   const [bicycleData, setBicycleData] = useState<
     {
       ID: string;
@@ -63,7 +63,7 @@ const Bicycle_data = () => {
               ? (React.createElement(BOOKED, {
                 bikeID: bicycleMap.bicycle_ID,
                 status: bicycleMap.status,
-                username: bicycleMap.username,
+                username: user?.email,
                 lat: parseFloat(bicycleMap.lat),
                 lng: parseFloat(bicycleMap.lng),
                 userPos: userLocation.position,
@@ -74,7 +74,7 @@ const Bicycle_data = () => {
               ? (React.createElement(INUSE, {
                 bikeID: bicycleMap.bicycle_ID,
                 status: bicycleMap.status,
-                username: bicycleMap.username,
+                username: user?.email,
                 lat: parseFloat(bicycleMap.lat),
                 lng: parseFloat(bicycleMap.lng),
                 userPos: userLocation.position,
@@ -98,7 +98,7 @@ const Bicycle_data = () => {
                 ? React.createElement(AVAILABLE, {
                   bikeID: bicycleMap.bicycle_ID,
                   status: bicycleMap.status,
-                  username: bicycleMap.username,
+                  username: user!.email!,
                   lat: parseFloat(bicycleMap.lat),
                   lng: parseFloat(bicycleMap.lng),
                   userPos: userLocation.position,
