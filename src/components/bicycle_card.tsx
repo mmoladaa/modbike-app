@@ -98,7 +98,7 @@ const Bicycle_data = () => {
                 ? React.createElement(AVAILABLE, {
                   bikeID: bicycleMap.bicycle_ID,
                   status: bicycleMap.status,
-                  username: user!.email!,
+                  username: user?.email!,
                   lat: parseFloat(bicycleMap.lat),
                   lng: parseFloat(bicycleMap.lng),
                   userPos: userLocation.position,
