@@ -9,6 +9,7 @@ import React, {
 import axios from "axios";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { Button } from "@chakra-ui/react";
+import { TbCurrentLocation } from "react-icons/tb";
 
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
@@ -98,9 +99,10 @@ const Map = () => {
           }}
         />
       </GoogleMap>
-      <div className="z-10 fixed bottom-60 right-0 pr-4 ">
-        <img
-          src="reset.svg"
+      <div className="z-10 fixed bottom-60 right-0 pr-4 pb-1">
+        <TbCurrentLocation
+          size={40}
+          className=""
           onClick={() => {
             map.panTo({
               lat: userLocation.position.lat,
