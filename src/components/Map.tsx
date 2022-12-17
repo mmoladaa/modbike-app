@@ -37,7 +37,7 @@ const Map = () => {
 
   const userLocation = useGeoLocation();
 
-  const map:any = mapRef.current;
+  const map: any = mapRef.current;
 
   const [markers, setMarkers] =
     useState<
@@ -98,15 +98,19 @@ const Map = () => {
           }}
         />
       </GoogleMap>
-      <div className="fixed bottom-60 right-0 pr-4 pb-4">
-        <img src="reset.svg" onClick={() => {
-              map.panTo({lat: userLocation.position.lat, lng: userLocation.position.lng});
-              map.setZoom(18);
-            }} />
+      <div className="z-10 fixed bottom-60 right-0 pr-4 ">
+        <img
+          src="reset.svg"
+          onClick={() => {
+            map.panTo({
+              lat: userLocation.position.lat,
+              lng: userLocation.position.lng,
+            });
+            map.setZoom(18);
+          }}
+        />
       </div>
     </div>
-
-    
   ) : (
     <>abc</>
   );
