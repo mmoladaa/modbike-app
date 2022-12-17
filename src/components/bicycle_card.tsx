@@ -32,14 +32,12 @@ const Bicycle_data = () => {
     <div>
       <Flex
         w="100vw"
-        h={{ base: "55vh", lg: "55vh", sm: "55vh", md: "55vh" }}
+        h={{ base: "55vh", lg: "50vh", md: "40vh" }}
+        
         overflowY="scroll"
       >
         {bicycleData?.map((bicycleMap) => (
-          <div
-            key={bicycleMap.bicycle_ID}
-            className="bg-gradient-to-t from-[#A4DFFA]"
-          >
+          <div key={bicycleMap.bicycle_ID}>
             {bicycleMap.status == "available"
               ? React.createElement(Card_modal, {
                   bikeID: bicycleMap.bicycle_ID,
