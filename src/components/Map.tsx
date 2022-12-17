@@ -36,19 +36,28 @@ const Map = () => {
 
   const map: any = mapRef.current;
 
-  const [markers, setMarkers] =
-    useState<
-      { node: string; lat: string; lng: string; date: string; time: string }[]
-    >();
-
-  useEffect(() => {
-    const fetchGPSData = async () => {
-      const resultAwait = await axios.get("https://iot.encall.space/view.php");
-      setMarkers(resultAwait.data.markers);
-    };
+  const [markers, setMarkers] = useState<
     {
-      useGeoLocation;
-    }
+      node: string;
+      bicycle_ID: string;
+      status: string;
+      time: string;
+      username: string;
+      lat: string;
+      lng: string;
+    }[]
+  >();
+
+  const fetchGPSData = async () => {
+    const resultAwait = await axios.get(
+      "https://iot.encall.space/bicycle_data.php"
+    );
+    setMarkers(resultAwait.data.bicycle_data);
+  };
+  {
+    useGeoLocation;
+  }
+  useEffect(() => {
     fetchGPSData();
     const interval = setInterval(() => {
       {
@@ -69,7 +78,7 @@ const Map = () => {
         onLoad={onLoad}
       >
         {markers?.map((marker) => {
-          return (
+          return marker.status == "available" ? (
             <Marker
               position={{
                 lat: parseFloat(marker.lat),
@@ -77,14 +86,45 @@ const Map = () => {
               }}
               key={parseFloat(marker.node)}
               icon={{
-                url: "avaliable.svg",
+                url: "available.svg",
                 scaledSize: new window.google.maps.Size(25, 25),
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(10, 10),
               }}
             />
+          ) : marker.status == "inuse" ? (
+            <Marker
+              position={{
+                lat: parseFloat(marker.lat),
+                lng: parseFloat(marker.lng),
+              }}
+              key={parseFloat(marker.node)}
+              icon={{
+                url: "unavailable.svg",
+                scaledSize: new window.google.maps.Size(25, 25),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(10, 10),
+              }}
+            />
+          ) : marker.status == "booked" ? (
+            <Marker
+              position={{
+                lat: parseFloat(marker.lat),
+                lng: parseFloat(marker.lng),
+              }}
+              key={parseFloat(marker.node)}
+              icon={{
+                url: "pending.svg",
+                scaledSize: new window.google.maps.Size(25, 25),
+                origin: new window.google.maps.Point(0, 0),
+                anchor: new window.google.maps.Point(10, 10),
+              }}
+            />
+          ) : (
+            <></>
           );
         })}
+
         <Marker
           position={userLocation.position}
           icon={{
