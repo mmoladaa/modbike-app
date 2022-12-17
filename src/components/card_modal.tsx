@@ -65,7 +65,6 @@ const card_modal = ({ bikeID, status, lat, lng, userPos }: Props) => {
           setDirectionsResponse(result);
           setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
           setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
-          console.log(result);
         }
       }
     );
