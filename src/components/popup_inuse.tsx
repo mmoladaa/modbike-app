@@ -70,7 +70,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
   const cancelRef = useRef<HTMLButtonElement>(null);
     const d = new Date();
     const passstatus = () => {
-      const url = "http://localhost:8888/test_post/index.php";
+      const url = "https://iot.encall.space/edit_data.php";
       let fData = new FormData();
       fData.append("bicycle_id", bikeID);
       fData.append("bicycle_status", "booked");

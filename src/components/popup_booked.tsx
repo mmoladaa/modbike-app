@@ -34,7 +34,7 @@ type DirectionsResult = google.maps.DirectionsResult;
 const BOOKED = ({ bikeID, status,username}: Props) => {
     const d = new Date();
     const retrieve = () => {
-      const url = "http://localhost:8888/test_post/index.php";
+      const url = "https://iot.encall.space/edit_data.php";
       let fData = new FormData();
       fData.append("bicycle_id", bikeID);
       fData.append("bicycle_status", "inuse");
@@ -50,7 +50,7 @@ const BOOKED = ({ bikeID, status,username}: Props) => {
       onClose();
     };
     const passstatus = () => {
-      const url = "http://localhost:8888/test_post/index.php";
+      const url = "https://iot.encall.space/edit_data.php";
       let fData = new FormData();
       fData.append("bicycle_id", bikeID);
       fData.append("bicycle_status", "available");
