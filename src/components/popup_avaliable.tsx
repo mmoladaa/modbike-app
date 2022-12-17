@@ -31,27 +31,68 @@ type Props = {
 };
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
+import { useJsApiLoader } from "@react-google-maps/api";
+import { useState } from "react";
 
-const AVAILABLE = ({ bikeID, status,username}: Props) => {
+const AVAILABLE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
+  });
+
+  const [directionsResponse, setDirectionsResponse] =
+    useState<DirectionsResult>();
+  const [googleDistance, setGoogleDistance] = useState("");
+  const [googleDuration, setGoogleDuration] = useState("");
+
+  function calculateRoute(
+    userPos: LatLngLiteral,
+    destinationPos: LatLngLiteral
+  ) {
+    const service = new google.maps.DirectionsService();
+    service.route(
+      {
+        origin: userPos,
+        destination: destinationPos,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          setDirectionsResponse(result);
+          setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
+          setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
+        }
+      }
+    );
+  }
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
     const d = new Date();
     const passstatus = () => {
-        const url = "https://iot.encall.space/edit_data.php";
-        let fData = new FormData();
-        fData.append("bicycle_id", bikeID);
-        fData.append("bicycle_status", "booked");
-        fData.append(
-          "time",
-          d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-        );
-        fData.append("user_id", username);
-        axios.post(url, fData).then((response) => alert(response.data));
-        console.log(
-          d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-        );
-      };
-    const { isOpen, onOpen, onClose } = useDisclosure();
+      const url = "https://iot.encall.space/edit_data.php";
+      let fData = new FormData();
+      fData.append("bicycle_id", bikeID);
+      fData.append("bicycle_status", "booked");
+      fData.append(
+        "time",
+        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+      );
+      fData.append("user_id", username);
+      axios.post(url, fData).then((response) => console.log(response.data));
+      console.log(
+        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+      );
+      onClose();
+    };
   return (
     <div>
+      <>
+        {calculateRoute(userPos, {
+          lat: lat,
+          lng: lng,
+        })}
+      </>
         <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
     <div onClick={onOpen}>
     <div className=" flex-nowrap ">
@@ -85,9 +126,13 @@ const AVAILABLE = ({ bikeID, status,username}: Props) => {
           </HStack>
         </CardHeader>
         <CardBody>
-          <Text as="b" fontSize="3xl">
-            {bikeID}
-          </Text>
+        <Text as="b" fontSize="3xl">
+                {bikeID}
+              </Text>
+              <Text as="b" fontSize="xl">
+                {googleDistance}
+                {googleDuration}
+              </Text>
           {/* </VStack> */}
         </CardBody>
         <CardFooter></CardFooter>
@@ -104,7 +149,8 @@ const AVAILABLE = ({ bikeID, status,username}: Props) => {
             <Text>bicycle id {bikeID}</Text>
             <Text>status {status}</Text>
             <Text>do you want to book this bicycle?</Text>
-            <Button colorScheme='green' onClick={passstatus}>book</Button>
+            <Button colorScheme='green' onClick={passstatus}>return</Button>
+            {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
             
           </ModalBody>
 
