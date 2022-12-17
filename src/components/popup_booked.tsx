@@ -18,7 +18,6 @@ import {
   HStack,
   Icon,
 } from "@chakra-ui/react";
-import { useRef } from "react";
 import axios from "axios";
 
 type Props = {
@@ -31,49 +30,30 @@ type Props = {
 };
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
-import { useJsApiLoader } from "@react-google-maps/api";
-import { useState } from "react";
 
-const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
-  });
-
-  const [directionsResponse, setDirectionsResponse] =
-    useState<DirectionsResult>();
-  const [googleDistance, setGoogleDistance] = useState("");
-  const [googleDuration, setGoogleDuration] = useState("");
-
-  function calculateRoute(
-    userPos: LatLngLiteral,
-    destinationPos: LatLngLiteral
-  ) {
-    const service = new google.maps.DirectionsService();
-    service.route(
-      {
-        origin: userPos,
-        destination: destinationPos,
-        travelMode: google.maps.TravelMode.DRIVING,
-      },
-      (result, status) => {
-        if (status === "OK" && result) {
-          setDirectionsResponse(result);
-          setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
-          setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
-        }
-      }
-    );
-  }
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
+const BOOKED = ({ bikeID, status,username}: Props) => {
     const d = new Date();
+    const retrieve = () => {
+      const url = "http://localhost:8888/test_post/index.php";
+      let fData = new FormData();
+      fData.append("bicycle_id", bikeID);
+      fData.append("bicycle_status", "inuse");
+      fData.append(
+        "time",
+        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+      );
+      fData.append("user_id", username);
+      axios.post(url, fData).then((response) => console.log(response.data));
+      console.log(
+        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+      );
+      onClose();
+    };
     const passstatus = () => {
       const url = "http://localhost:8888/test_post/index.php";
       let fData = new FormData();
       fData.append("bicycle_id", bikeID);
-      fData.append("bicycle_status", "booked");
+      fData.append("bicycle_status", "available");
       fData.append(
         "time",
         d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
@@ -85,14 +65,9 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
       );
       onClose();
     };
+    const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <div>
-      <>
-        {calculateRoute(userPos, {
-          lat: lat,
-          lng: lng,
-        })}
-      </>
         <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
     <div onClick={onOpen}>
     <div className=" flex-nowrap ">
@@ -110,7 +85,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
               
               viewBox="0 0 200 200"
               color="#FFFFFF"
-              stroke="#FF3333"
+              stroke="#FFBB33"
               strokeWidth="40"
               boxSize={6}
             >
@@ -126,13 +101,9 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
           </HStack>
         </CardHeader>
         <CardBody>
-        <Text as="b" fontSize="3xl">
-                {bikeID}
-              </Text>
-              <Text as="b" fontSize="xl">
-                {googleDistance}
-                {googleDuration}
-              </Text>
+          <Text as="b" fontSize="3xl">
+            {bikeID}
+          </Text>
           {/* </VStack> */}
         </CardBody>
         <CardFooter></CardFooter>
@@ -148,9 +119,10 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
           <ModalBody>
             <Text>bicycle id {bikeID}</Text>
             <Text>status {status}</Text>
+            <Text>do you want to retrieve this bicycle?</Text>
+            <Button colorScheme='green' onClick={retrieve}>retrieve</Button>
             <Text>do you want to return this bicycle?</Text>
-            <Button colorScheme='green' onClick={passstatus}>return</Button>
-            {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
+            <Button colorScheme='orange' onClick={passstatus}>return</Button>
             
           </ModalBody>
 
@@ -165,4 +137,4 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
   )
 }
 
-export default INUSE
+export default BOOKED
