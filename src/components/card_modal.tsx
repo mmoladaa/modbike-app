@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardHeader,
@@ -23,19 +22,55 @@ import {
   AlertDialogOverlay,
   HStack,
   Icon,
-  VStack,
 } from "@chakra-ui/react";
 type Props = {
   bikeID: string;
   status: string;
+  lat: number;
+  lng: number;
+  userPos: LatLngLiteral;
 };
 import { useRef } from "react";
 import axios from "axios";
-// import { useState } from 'react';
+import { useJsApiLoader } from "@react-google-maps/api";
+import { useState } from "react";
 
-// const [book, setBook] = useState();
+type LatLngLiteral = google.maps.LatLngLiteral;
+type DirectionsResult = google.maps.DirectionsResult;
 
-const card_modal = ({ bikeID, status }: Props) => {
+const card_modal = ({ bikeID, status, lat, lng, userPos }: Props) => {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
+  });
+
+  const [directionsResponse, setDirectionsResponse] =
+    useState<DirectionsResult>();
+  const [googleDistance, setGoogleDistance] = useState("");
+  const [googleDuration, setGoogleDuration] = useState("");
+
+  function calculateRoute(
+    userPos: LatLngLiteral,
+    destinationPos: LatLngLiteral
+  ) {
+    const service = new google.maps.DirectionsService();
+    service.route(
+      {
+        origin: userPos,
+        destination: destinationPos,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          setDirectionsResponse(result);
+          setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
+          setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
+          console.log(result);
+        }
+      }
+    );
+  }
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const cancelRef = React.useRef()
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -58,8 +93,14 @@ const card_modal = ({ bikeID, status }: Props) => {
       d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
     );
   };
-  return (
+  return isLoaded ? (
     <div>
+      <>
+        {calculateRoute(userPos, {
+          lat: lat,
+          lng: lng,
+        })}
+      </>
       <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
       <div onClick={onOpen}>
         <div className=" flex-nowrap ">
@@ -96,6 +137,10 @@ const card_modal = ({ bikeID, status }: Props) => {
               {/* <Text as='abbr' fontSize='md'>Bicycle ID</Text> */}
               <Text as="b" fontSize="3xl">
                 {bikeID}
+              </Text>
+              <Text as="b" fontSize="xl">
+                {googleDistance}
+                {googleDuration}
               </Text>
               {/* </VStack> */}
             </CardBody>
@@ -154,6 +199,8 @@ const card_modal = ({ bikeID, status }: Props) => {
         </ModalContent>
       </Modal>
     </div>
+  ) : (
+    <>LOADING</>
   );
 };
 
