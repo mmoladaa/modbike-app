@@ -32,8 +32,7 @@ const Bicycle_data = () => {
     <div>
       <Flex
         w="100vw"
-        h={{ base: "55vh", lg: "50vh", md: "40vh" }}
-        
+        h={{ base: "55vh", lg: "52vh", md: "40vh" }}
         overflowY="scroll"
       >
         {bicycleData?.map((bicycleMap) => (
