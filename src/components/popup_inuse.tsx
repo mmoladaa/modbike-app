@@ -73,7 +73,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
       const url = "https://iot.encall.space/edit_data.php";
       let fData = new FormData();
       fData.append("bicycle_id", bikeID);
-      fData.append("bicycle_status", "booked");
+      fData.append("bicycle_status", "available");
       fData.append(
         "time",
         d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]

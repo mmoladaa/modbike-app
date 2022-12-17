@@ -18,6 +18,7 @@ import {
   HStack,
   Icon,
 } from "@chakra-ui/react";
+import { useRef } from "react";
 import axios from "axios";
 
 type Props = {
@@ -30,44 +31,84 @@ type Props = {
 };
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
+import { useJsApiLoader } from "@react-google-maps/api";
+import { useState } from "react";
 
-const BOOKED = ({ bikeID, status,username}: Props) => {
+const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
+  });
+
+  const [directionsResponse, setDirectionsResponse] =
+    useState<DirectionsResult>();
+  const [googleDistance, setGoogleDistance] = useState("");
+  const [googleDuration, setGoogleDuration] = useState("");
+
+  function calculateRoute(
+    userPos: LatLngLiteral,
+    destinationPos: LatLngLiteral
+  ) {
+    const service = new google.maps.DirectionsService();
+    service.route(
+      {
+        origin: userPos,
+        destination: destinationPos,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          setDirectionsResponse(result);
+          setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
+          setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
+        }
+      }
+    );
+  }
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
     const d = new Date();
     const retrieve = () => {
-      const url = "https://iot.encall.space/edit_data.php";
-      let fData = new FormData();
-      fData.append("bicycle_id", bikeID);
-      fData.append("bicycle_status", "inuse");
-      fData.append(
-        "time",
-        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-      );
-      fData.append("user_id", username);
-      axios.post(url, fData).then((response) => console.log(response.data));
-      console.log(
-        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-      );
-      onClose();
-    };
-    const passstatus = () => {
-      const url = "https://iot.encall.space/edit_data.php";
-      let fData = new FormData();
-      fData.append("bicycle_id", bikeID);
-      fData.append("bicycle_status", "available");
-      fData.append(
-        "time",
-        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-      );
-      fData.append("user_id", "0");
-      axios.post(url, fData).then((response) => console.log(response.data));
-      console.log(
-        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-      );
-      onClose();
-    };
-    const { isOpen, onOpen, onClose } = useDisclosure();
+        const url = "https://iot.encall.space/edit_data.php";
+        let fData = new FormData();
+        fData.append("bicycle_id", bikeID);
+        fData.append("bicycle_status", "inuse");
+        fData.append(
+          "time",
+          d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+        );
+        fData.append("user_id", username);
+        axios.post(url, fData).then((response) => console.log(response.data));
+        console.log(
+          d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+        );
+        onClose();
+      };
+      const passstatus = () => {
+        const url = "https://iot.encall.space/edit_data.php";
+        let fData = new FormData();
+        fData.append("bicycle_id", bikeID);
+        fData.append("bicycle_status", "available");
+        fData.append(
+          "time",
+          d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+        );
+        fData.append("user_id", "0");
+        axios.post(url, fData).then((response) => console.log(response.data));
+        console.log(
+          d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+        );
+        onClose();
+      };
   return (
     <div>
+      <>
+        {calculateRoute(userPos, {
+          lat: lat,
+          lng: lng,
+        })}
+      </>
         <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
     <div onClick={onOpen}>
     <div className=" flex-nowrap ">
@@ -85,7 +126,7 @@ const BOOKED = ({ bikeID, status,username}: Props) => {
               
               viewBox="0 0 200 200"
               color="#FFFFFF"
-              stroke="#FFBB33"
+              stroke="#FFFF33"
               strokeWidth="40"
               boxSize={6}
             >
@@ -101,9 +142,13 @@ const BOOKED = ({ bikeID, status,username}: Props) => {
           </HStack>
         </CardHeader>
         <CardBody>
-          <Text as="b" fontSize="3xl">
-            {bikeID}
-          </Text>
+        <Text as="b" fontSize="3xl">
+                {bikeID}
+              </Text>
+              <Text as="b" fontSize="xl">
+                {googleDistance}
+                {googleDuration}
+              </Text>
           {/* </VStack> */}
         </CardBody>
         <CardFooter></CardFooter>
@@ -123,6 +168,7 @@ const BOOKED = ({ bikeID, status,username}: Props) => {
             <Button colorScheme='green' onClick={retrieve}>retrieve</Button>
             <Text>do you want to return this bicycle?</Text>
             <Button colorScheme='orange' onClick={passstatus}>return</Button>
+            {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
             
           </ModalBody>
 
@@ -137,4 +183,4 @@ const BOOKED = ({ bikeID, status,username}: Props) => {
   )
 }
 
-export default BOOKED
+export default INUSE
