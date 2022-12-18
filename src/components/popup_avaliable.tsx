@@ -163,7 +163,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
                         <Text>bicycle id {bikeID}</Text>
                         <Text>status {status}</Text>
                         <Text>do you want to book this bicycle?</Text>
-                        <Button colorScheme='green' onClick={passstatus}>return</Button>
+                        <Button colorScheme='green' onClick={passstatus}>book</Button>
                         {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
 
                     </ModalBody>
