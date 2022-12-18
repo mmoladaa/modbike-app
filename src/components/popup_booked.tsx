@@ -17,6 +17,7 @@ import {
   Button,
   HStack,
   Icon,
+  Divider
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import axios from "axios";
@@ -160,27 +161,32 @@ const INUSE = ({
       </div>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent borderRadius="25px">
           <ModalHeader>{bikeID}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>bicycle id {bikeID}</Text>
-            <Text>status {status}</Text>
-            <Text>do you want to retrieve this bicycle?</Text>
-            <Button colorScheme="green" onClick={retrieve}>
-              retrieve
-            </Button>
-            <Text>do you want to return this bicycle?</Text>
-            <Button colorScheme="orange" onClick={passstatus}>
-              return
-            </Button>
+            <Text textAlign="center">Bicycle ID : {bikeID}</Text>
+            <Text textAlign="center">Status : Booked</Text>
+            <Text textAlign="center">What do you want to do ?</Text>
+            <Divider orientation="horizontal" />
+            
             {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
+            
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
+
+          <HStack spacing="4vw" >
+            <Button colorScheme='green' onClick={retrieve}>RETRIEVE</Button>
+            
+            
+            {/* <Text>do you want to return this bicycle?</Text> */}
+            <Button colorScheme='orange' onClick={passstatus}>RETURN</Button>
+            
+          
+            <Button colorScheme="blue" mr={3} onClick={onClose}>Close</Button>
+            </HStack>
+            
           </ModalFooter>
         </ModalContent>
       </Modal>
