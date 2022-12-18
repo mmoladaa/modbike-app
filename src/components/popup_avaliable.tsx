@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardHeader,
@@ -19,7 +18,7 @@ import {
   Icon,
   Alert,
   AlertIcon,
-  Divider
+  Divider,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import axios from "axios";
@@ -36,7 +35,7 @@ type Props = {
 };
 
 type LatLngLiteral = google.maps.LatLngLiteral;
-type DirectionsResult = google.maps.DirectionsResult;
+
 import { useJsApiLoader, DistanceMatrixService } from "@react-google-maps/api";
 import { useState } from "react";
 
@@ -55,13 +54,10 @@ const AVAILABLE = ({
     googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
   });
 
-  const [directionsResponse, setDirectionsResponse] =
-    useState<DirectionsResult>();
   const [googleDistance, setGoogleDistance] = useState("");
   const [googleDuration, setGoogleDuration] = useState("");
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
   const d = new Date();
   const passstatus = () => {
     const url = "https://iot.encall.space/edit_data.php";
@@ -77,13 +73,13 @@ const AVAILABLE = ({
     console.log(
       d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
     );
-    alert("booking done");
+    alert("Bicycle booked successfully");
     fetchBicycleData();
   };
 
   const checkLogin = () => {
     if (!isAuthenticated) {
-      alert("Please login to book a bicycle");
+      alert("Please login first to book a bicycle");
     } else {
       onOpen();
     }
@@ -102,7 +98,7 @@ const AVAILABLE = ({
           setGoogleDuration(response!.rows[0].elements[0].duration.text);
         }}
       />
-      ;<link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
+      <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
       <div onClick={checkLogin}>
         <div className=" flex-nowrap ">
           <Card
@@ -110,6 +106,7 @@ const AVAILABLE = ({
             variant="filled"
             m={4}
             w={200}
+            h={210}
             borderRadius="20"
             shadow-3xl="true"
           >
@@ -138,40 +135,43 @@ const AVAILABLE = ({
               </Text>
               <br />
               <Text as="b" fontSize="xl">
+                ระยะห่าง:{" "}
                 {googleDistance}
+                <br />
+                เวลา:{" "}
                 {googleDuration}
               </Text>
-              {/* </VStack> */}
             </CardBody>
             <CardFooter></CardFooter>
           </Card>
         </div>
-        {/* </Flex> */}
       </div>
       <Modal isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent width="500px" maxW="2000000px" borderRadius="25px">
-                    <ModalHeader textAlign="center">{bikeID}</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Text textAlign="center">Bicycle ID : {bikeID}</Text>
-                        <Text textAlign="center">Status : Available</Text>
-                        <Text textAlign="center">Do you want to book this bicycle ?</Text>
-                        
-                        {/* <Text>Do you want to book this bicycle?</Text> */}
-                        {/* <Button colorScheme='green' onClick={passstatus}>book</Button> */}
-                        {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
-
-                    </ModalBody>
-                    <Divider orientation='horizontal' />
-                    <ModalFooter justifyContent="space-around">
-                        <Button colorScheme='green' mr = {3} onClick={passstatus}>BOOK</Button>
-                        <Button colorScheme="gray" variant='outline'mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                    </ModalFooter>
-                </ModalContent>
-            </Modal>
+        <ModalOverlay />
+        <ModalContent width="500px" maxW="2000000px" borderRadius="25px">
+          <ModalHeader textAlign="center">{bikeID}</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text textAlign="center">Bicycle ID : {bikeID}</Text>
+            <Text textAlign="center">Status : Available</Text>
+            <Text textAlign="center">Do you want to book this bicycle ?</Text>
+          </ModalBody>
+          <Divider orientation="horizontal" />
+          <ModalFooter justifyContent="space-around">
+            <Button colorScheme="green" mr={3} onClick={passstatus}>
+              BOOK
+            </Button>
+            <Button
+              colorScheme="gray"
+              variant="outline"
+              mr={3}
+              onClick={onClose}
+            >
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </div>
   );
 };

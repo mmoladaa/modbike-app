@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardHeader,
@@ -32,7 +31,7 @@ type Props = {
   fetchBicycleData: () => void;
 };
 type LatLngLiteral = google.maps.LatLngLiteral;
-type DirectionsResult = google.maps.DirectionsResult;
+
 import { useJsApiLoader, DistanceMatrixService } from "@react-google-maps/api";
 import { useState } from "react";
 
@@ -50,8 +49,6 @@ const INUSE = ({
     googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
   });
 
-  const [directionsResponse, setDirectionsResponse] =
-    useState<DirectionsResult>();
   const [googleDistance, setGoogleDistance] = useState("");
   const [googleDuration, setGoogleDuration] = useState("");
 
@@ -72,7 +69,7 @@ const INUSE = ({
     console.log(
       d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
     );
-    alert("return success");
+    alert("Return succesfully");
     fetchBicycleData();
   };
   return (
@@ -96,6 +93,7 @@ const INUSE = ({
             variant="filled"
             m={4}
             w={200}
+            h={210}
             borderRadius="20"
             shadow-3xl="true"
           >
@@ -114,7 +112,6 @@ const INUSE = ({
                   />
                 </Icon>
                 <Heading as="h4" size="xs">
-                  {/* {username} */}
                   {status.toUpperCase()}
                 </Heading>
               </HStack>
@@ -123,16 +120,18 @@ const INUSE = ({
               <Text as="b" fontSize="3xl">
                 {bikeID}
               </Text>
+              <br />
               <Text as="b" fontSize="xl">
+              ระยะห่าง:{" "}
                 {googleDistance}
+                <br />
+                เวลา:{" "}
                 {googleDuration}
               </Text>
-              {/* </VStack> */}
             </CardBody>
             <CardFooter></CardFooter>
           </Card>
         </div>
-        {/* </Flex> */}
       </div>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
@@ -143,9 +142,6 @@ const INUSE = ({
             <Text textAlign="center" >Bicycle ID : {bikeID}</Text>
             <Text textAlign="center" >Status : In Use</Text>
             <Text textAlign="center" >Do you want to return this bicycle?</Text>
-            
-            {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
-            
           </ModalBody>
           <Divider orientation="horizontal" />
           <ModalFooter justifyContent="space-around">

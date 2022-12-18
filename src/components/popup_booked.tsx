@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Card,
   CardHeader,
@@ -17,9 +16,8 @@ import {
   Button,
   HStack,
   Icon,
-  Divider
+  Divider,
 } from "@chakra-ui/react";
-import { useRef } from "react";
 import axios from "axios";
 
 type Props = {
@@ -32,7 +30,6 @@ type Props = {
   fetchBicycleData: () => void;
 };
 type LatLngLiteral = google.maps.LatLngLiteral;
-type DirectionsResult = google.maps.DirectionsResult;
 import { useJsApiLoader, DistanceMatrixService } from "@react-google-maps/api";
 import { useState } from "react";
 
@@ -50,14 +47,10 @@ const INUSE = ({
     googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
   });
 
-  const [directionsResponse, setDirectionsResponse] =
-    useState<DirectionsResult>();
-  const [googleDistance, setGoogleDistance] = useState("");
   const [googleDuration, setGoogleDuration] = useState("");
   const [googleDistanceM, setGoogleDistanceM] = useState(Number);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
   const d = new Date();
   const retrieve = () => {
     if (googleDistanceM <= 150) {
@@ -74,9 +67,9 @@ const INUSE = ({
       console.log(
         d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
       );
-      alert("retrieving done");
+      alert("Bicycle is now in use");
     } else {
-      alert("Too far away");
+      alert("You are too far away from the bicycle");
     }
     fetchBicycleData();
   };
@@ -94,7 +87,7 @@ const INUSE = ({
     console.log(
       d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
     );
-    alert("returning done");
+    alert("Bicycle is now available");
     fetchBicycleData();
   };
   return (
@@ -107,7 +100,6 @@ const INUSE = ({
         }}
         callback={(response) => {
           setGoogleDistanceM(response!.rows[0].elements[0].duration.value);
-          setGoogleDistance(response!.rows[0].elements[0].distance.text);
           setGoogleDuration(response!.rows[0].elements[0].duration.text);
         }}
       />
@@ -119,6 +111,7 @@ const INUSE = ({
             variant="filled"
             m={4}
             w={200}
+            h={210}
             borderRadius="20"
             shadow-3xl="true"
           >
@@ -146,10 +139,12 @@ const INUSE = ({
               <Text as="b" fontSize="3xl">
                 {bikeID}
               </Text>
+              <br />
               <Text as="b" fontSize="xl">
+              ระยะห่าง:{" "}
+                {googleDistanceM} ม.
                 <br />
-                {googleDistanceM}metres
-                <br />
+                เวลา:{" "}
                 {googleDuration}
               </Text>
               {/* </VStack> */}
@@ -169,24 +164,25 @@ const INUSE = ({
             <Text textAlign="center">Status : Booked</Text>
             <Text textAlign="center">What do you want to do ?</Text>
             <Divider orientation="horizontal" />
-            
+
             {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
-            
           </ModalBody>
 
           <ModalFooter>
+            <HStack spacing="4vw">
+              <Button colorScheme="green" onClick={retrieve}>
+                RETRIEVE
+              </Button>
 
-          <HStack spacing="4vw" >
-            <Button colorScheme='green' onClick={retrieve}>RETRIEVE</Button>
-            
-            
-            {/* <Text>do you want to return this bicycle?</Text> */}
-            <Button colorScheme='orange' onClick={passstatus}>RETURN</Button>
-            
-          
-            <Button colorScheme="blue" mr={3} onClick={onClose}>Close</Button>
+              {/* <Text>do you want to return this bicycle?</Text> */}
+              <Button colorScheme="orange" onClick={passstatus}>
+                RETURN
+              </Button>
+
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
             </HStack>
-            
           </ModalFooter>
         </ModalContent>
       </Modal>
