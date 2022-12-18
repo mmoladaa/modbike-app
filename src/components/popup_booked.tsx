@@ -33,7 +33,9 @@ type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
 import { useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
-
+function refreshPage() {
+  window.location.reload();
+}
 const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -87,9 +89,10 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
           d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
         );
         alert("retrieving done");
-        onClose();
+        refreshPage();
         }else{
           alert("Too far away");
+          refreshPage();
         }
       };
       const passstatus = () => {
@@ -107,7 +110,8 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
           d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
         );
         alert("returning done");
-        onClose();
+        refreshPage();
+        // onClose();
       };
   return (
     <div>

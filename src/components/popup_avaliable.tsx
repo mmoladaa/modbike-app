@@ -37,6 +37,9 @@ type DirectionsResult = google.maps.DirectionsResult;
 import { useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
 
+function refreshPage() {
+    window.location.reload();
+  }
 const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
     const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
     const { isLoaded } = useJsApiLoader({
@@ -88,7 +91,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
             d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
         );
         alert("booking done");
-        onClose();
+        refreshPage();
     };
 
     const checkLogin = () => {
