@@ -72,6 +72,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
   const cancelRef = useRef<HTMLButtonElement>(null);
     const d = new Date();
     const retrieve = () => {
+      if(googleDistanceM<=1500){
         const url = "https://iot.encall.space/edit_data.php";
         let fData = new FormData();
         fData.append("bicycle_id", bikeID);
@@ -87,6 +88,9 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
         );
         alert("retrieving done");
         onClose();
+        }else{
+          alert("Too far away");
+        }
       };
       const passstatus = () => {
         const url = "https://iot.encall.space/edit_data.php";
