@@ -8,6 +8,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import useGeoLocation from "../hooks/useGeoLocation";
+import { TbCurrentLocation } from "react-icons/tb";
 
 type MapOptions = google.maps.MapOptions;
 
@@ -183,8 +184,8 @@ const Map = () => {
         />
       </GoogleMap>
       <div className="z-10 fixed bottom-60 right-0 pr-4 pb-4">
-        <img
-          src="reset.svg"
+        <TbCurrentLocation
+          className="w-12 h-12"
           onClick={() => {
             useGeoLocation;
             map.panTo({
