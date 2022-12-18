@@ -48,7 +48,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
         useState<DirectionsResult>();
     const [googleDistance, setGoogleDistance] = useState("");
     const [googleDuration, setGoogleDuration] = useState("");
-
+    var splitted = googleDistance.split(" ", 2); 
     function calculateRoute(
         userPos: LatLngLiteral,
         destinationPos: LatLngLiteral
@@ -144,7 +144,8 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
                             </Text>
                             <br />
                             <Text as="b" fontSize="xl">
-                                {googleDistance} 
+                                {splitted[0]}
+                                {/* {googleDistance}  */}
                                 {googleDuration}
                             </Text>
                             {/* </VStack> */}
