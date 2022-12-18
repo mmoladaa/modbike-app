@@ -83,6 +83,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
         console.log(
           d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
         );
+        alert("retrieving done");
         onClose();
       };
       const passstatus = () => {
@@ -99,6 +100,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
         console.log(
           d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
         );
+        alert("returning done");
         onClose();
       };
   return (
@@ -126,7 +128,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
               
               viewBox="0 0 200 200"
               color="#FFFFFF"
-              stroke="#FFFF33"
+              stroke="#F2E002"
               strokeWidth="40"
               boxSize={6}
             >

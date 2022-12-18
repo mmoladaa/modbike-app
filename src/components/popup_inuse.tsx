@@ -83,6 +83,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
       console.log(
         d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
       );
+      alert("return success");
       onClose();
     };
   return (
