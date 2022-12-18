@@ -34,9 +34,9 @@ type DirectionsResult = google.maps.DirectionsResult;
 import { useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
 function refreshPage() {
-  window.location.reload();
+  location.reload();
 }
-const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
+const INUSE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
@@ -70,24 +70,24 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
-    const d = new Date();
-    const passstatus = () => {
-      const url = "https://iot.encall.space/edit_data.php";
-      let fData = new FormData();
-      fData.append("bicycle_id", bikeID);
-      fData.append("bicycle_status", "available");
-      fData.append(
-        "time",
-        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-      );
-      fData.append("user_id", "0");
-      axios.post(url, fData).then((response) => console.log(response.data));
-      console.log(
-        d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
-      );
-      alert("return success");
-      refreshPage();
-    };
+  const d = new Date();
+  const passstatus = () => {
+    const url = "https://iot.encall.space/edit_data.php";
+    let fData = new FormData();
+    fData.append("bicycle_id", bikeID);
+    fData.append("bicycle_status", "available");
+    fData.append(
+      "time",
+      d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+    );
+    fData.append("user_id", "0");
+    axios.post(url, fData).then((response) => console.log(response.data));
+    console.log(
+      d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
+    );
+    alert("return success");
+    refreshPage();
+  };
   return (
     <div>
       <>
@@ -96,54 +96,53 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
           lng: lng,
         })}
       </>
-        <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
-    <div onClick={onOpen}>
-    <div className=" flex-nowrap ">
-      <Card
-        bg="white"
-        variant="filled"
-        m={4}
-        w={200}
-        borderRadius="20"
-        shadow-3xl="true"
-      >
-        <CardHeader>
-          <HStack>
-            <Icon
-              
-              viewBox="0 0 200 200"
-              color="#FFFFFF"
-              stroke="#FF3333"
-              strokeWidth="40"
-              boxSize={6}
-            >
-              <path
-                fill="currentColor"
-                d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
-              />
-            </Icon>
-            <Heading as="h4" size="xs">
-                {/* {username} */}
-              {status.toUpperCase()}
-            </Heading>
-          </HStack>
-        </CardHeader>
-        <CardBody>
-        <Text as="b" fontSize="3xl">
+      <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
+      <div onClick={onOpen}>
+        <div className=" flex-nowrap ">
+          <Card
+            bg="white"
+            variant="filled"
+            m={4}
+            w={200}
+            borderRadius="20"
+            shadow-3xl="true"
+          >
+            <CardHeader>
+              <HStack>
+                <Icon
+                  viewBox="0 0 200 200"
+                  color="#FFFFFF"
+                  stroke="#FF3333"
+                  strokeWidth="40"
+                  boxSize={6}
+                >
+                  <path
+                    fill="currentColor"
+                    d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
+                  />
+                </Icon>
+                <Heading as="h4" size="xs">
+                  {/* {username} */}
+                  {status.toUpperCase()}
+                </Heading>
+              </HStack>
+            </CardHeader>
+            <CardBody>
+              <Text as="b" fontSize="3xl">
                 {bikeID}
               </Text>
               <Text as="b" fontSize="xl">
                 {googleDistance}
                 {googleDuration}
               </Text>
-          {/* </VStack> */}
-        </CardBody>
-        <CardFooter></CardFooter>
-      </Card>
-    </div>
-    {/* </Flex> */}
-  </div>
-  <Modal isOpen={isOpen} onClose={onClose}>
+              {/* </VStack> */}
+            </CardBody>
+            <CardFooter></CardFooter>
+          </Card>
+        </div>
+        {/* </Flex> */}
+      </div>
+      <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{bikeID}</ModalHeader>
@@ -152,9 +151,10 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
             <Text>bicycle id {bikeID}</Text>
             <Text>status {status}</Text>
             <Text>do you want to return this bicycle?</Text>
-            <Button colorScheme='green' onClick={passstatus}>return</Button>
+            <Button colorScheme="green" onClick={passstatus}>
+              return
+            </Button>
             {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
-            
           </ModalBody>
 
           <ModalFooter>
@@ -164,8 +164,8 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-</div>
-  )
-}
+    </div>
+  );
+};
 
-export default INUSE
+export default INUSE;

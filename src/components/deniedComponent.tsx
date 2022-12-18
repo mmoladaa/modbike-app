@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 function refreshPage() {
-  window.location.reload();
+  location.reload();
 }
 
 const DeniedComponent = () => {
