@@ -19,6 +19,7 @@ import {
   Icon,
   Alert,
   AlertIcon,
+  Divider
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import axios from "axios";
@@ -148,27 +149,29 @@ const AVAILABLE = ({
         {/* </Flex> */}
       </div>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{bikeID}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Text>bicycle id {bikeID}</Text>
-            <Text>status {status}</Text>
-            <Text>do you want to book this bicycle?</Text>
-            <Button colorScheme="green" onClick={passstatus}>
-              book
-            </Button>
-            {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
-          </ModalBody>
+                <ModalOverlay />
+                <ModalContent width="500px" maxW="2000000px" borderRadius="25px">
+                    <ModalHeader textAlign="center">{bikeID}</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <Text textAlign="center">Bicycle ID : {bikeID}</Text>
+                        <Text textAlign="center">Status : Available</Text>
+                        <Text textAlign="center">Do you want to book this bicycle ?</Text>
+                        
+                        {/* <Text>Do you want to book this bicycle?</Text> */}
+                        {/* <Button colorScheme='green' onClick={passstatus}>book</Button> */}
+                        {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+                    </ModalBody>
+                    <Divider orientation='horizontal' />
+                    <ModalFooter justifyContent="space-around">
+                        <Button colorScheme='green' mr = {3} onClick={passstatus}>BOOK</Button>
+                        <Button colorScheme="gray" variant='outline'mr={3} onClick={onClose}>
+                            Close
+                        </Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
     </div>
   );
 };

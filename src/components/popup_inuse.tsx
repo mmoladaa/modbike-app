@@ -17,6 +17,7 @@ import {
   Button,
   HStack,
   Icon,
+  Divider
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import axios from "axios";
@@ -135,20 +136,20 @@ const INUSE = ({
       </div>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{bikeID}</ModalHeader>
+        <ModalContent borderRadius="25px">
+          <ModalHeader textAlign="center">{bikeID}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Text>bicycle id {bikeID}</Text>
-            <Text>status {status}</Text>
-            <Text>do you want to return this bicycle?</Text>
-            <Button colorScheme="green" onClick={passstatus}>
-              return
-            </Button>
+            <Text textAlign="center" >Bicycle ID : {bikeID}</Text>
+            <Text textAlign="center" >Status : In Use</Text>
+            <Text textAlign="center" >Do you want to return this bicycle?</Text>
+            
             {/* <Button colorScheme='green' onClick={retrieve}>return</Button> */}
+            
           </ModalBody>
-
-          <ModalFooter>
+          <Divider orientation="horizontal" />
+          <ModalFooter justifyContent="space-around">
+          <Button colorScheme='green' onClick={passstatus}>RETURN</Button>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
