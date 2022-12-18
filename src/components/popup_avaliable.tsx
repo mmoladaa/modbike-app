@@ -144,7 +144,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
                             </Text>
                             <br />
                             <Text as="b" fontSize="xl">
-                                {splitDistance[0]}
+                                {splitDistance[-2]}
                                 {/* {googleDistance}  */}
                                 {googleDuration}
                             </Text>
