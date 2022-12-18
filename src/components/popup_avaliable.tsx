@@ -43,12 +43,11 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
         id: "google-map-script",
         googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
     });
-
+    var splitDistance = "";
     const [directionsResponse, setDirectionsResponse] =
         useState<DirectionsResult>();
     const [googleDistance, setGoogleDistance] = useState("");
     const [googleDuration, setGoogleDuration] = useState("");
-    var splitted = googleDistance.split(" ", 2); 
     function calculateRoute(
         userPos: LatLngLiteral,
         destinationPos: LatLngLiteral
@@ -64,6 +63,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
                 if (status === "OK" && result) {
                     setDirectionsResponse(result);
                     setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
+                    splitDistance = result!.routes[0]!.legs[0]!.distance!.text;
                     setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
                 }
             }
@@ -144,7 +144,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
                             </Text>
                             <br />
                             <Text as="b" fontSize="xl">
-                                {splitted[0]}
+                                {splitDistance[0]}
                                 {/* {googleDistance}  */}
                                 {googleDuration}
                             </Text>
