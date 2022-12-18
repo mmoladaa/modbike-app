@@ -57,7 +57,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
             {
                 origin: userPos,
                 destination: destinationPos,
-                travelMode: google.maps.TravelMode.DRIVING,
+                travelMode: google.maps.TravelMode.WALKING,
             },
             (result, status) => {
                 if (status === "OK" && result) {

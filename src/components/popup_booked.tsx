@@ -44,6 +44,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
     useState<DirectionsResult>();
   const [googleDistance, setGoogleDistance] = useState("");
   const [googleDuration, setGoogleDuration] = useState("");
+  const [googleDistanceM, setGoogleDistanceM] = useState(Number);
 
   function calculateRoute(
     userPos: LatLngLiteral,
@@ -54,13 +55,14 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
       {
         origin: userPos,
         destination: destinationPos,
-        travelMode: google.maps.TravelMode.DRIVING,
+        travelMode: google.maps.TravelMode.WALKING,
       },
       (result, status) => {
         if (status === "OK" && result) {
           setDirectionsResponse(result);
           setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
           setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
+          setGoogleDistanceM(result!.routes[0]!.legs[0]!.distance!.value);
         }
       }
     );
@@ -148,7 +150,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
                 {bikeID}
               </Text>
               <Text as="b" fontSize="xl">
-                {googleDistance}
+                {googleDistanceM}
                 {googleDuration}
               </Text>
           {/* </VStack> */}
