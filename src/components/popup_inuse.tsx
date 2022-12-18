@@ -32,7 +32,7 @@ type Props = {
 };
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
-import { useJsApiLoader } from "@react-google-maps/api";
+import { useJsApiLoader, DistanceMatrixService } from "@react-google-maps/api";
 import { useState } from "react";
 
 const INUSE = ({
@@ -53,27 +53,6 @@ const INUSE = ({
     useState<DirectionsResult>();
   const [googleDistance, setGoogleDistance] = useState("");
   const [googleDuration, setGoogleDuration] = useState("");
-
-  function calculateRoute(
-    userPos: LatLngLiteral,
-    destinationPos: LatLngLiteral
-  ) {
-    const service = new google.maps.DirectionsService();
-    service.route(
-      {
-        origin: userPos,
-        destination: destinationPos,
-        travelMode: google.maps.TravelMode.WALKING,
-      },
-      (result, status) => {
-        if (status === "OK" && result) {
-          setDirectionsResponse(result);
-          setGoogleDistance(result!.routes[0]!.legs[0]!.distance!.text);
-          setGoogleDuration(result!.routes[0]!.legs[0]!.duration!.text);
-        }
-      }
-    );
-  }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
@@ -97,12 +76,17 @@ const INUSE = ({
   };
   return (
     <div>
-      <>
-        {calculateRoute(userPos, {
-          lat: lat,
-          lng: lng,
-        })}
-      </>
+      <DistanceMatrixService
+        options={{
+          destinations: [{ lat: lat, lng: lng }],
+          origins: [userPos],
+          travelMode: google.maps.TravelMode.WALKING,
+        }}
+        callback={(response) => {
+          setGoogleDistance(response!.rows[0].elements[0].distance.text);
+          setGoogleDuration(response!.rows[0].elements[0].duration.text);
+        }}
+      />
       <link href="https://css.gg/shape-circle.css" rel="stylesheet"></link>
       <div onClick={onOpen}>
         <div className=" flex-nowrap ">

@@ -67,7 +67,7 @@ export default function NavBar() {
                 <Link to="/">Home</Link>
               </li>
               <li className="text-black">
-                <Link to="/">coming soon</Link>
+                <Link to="/contact">Contact</Link>
               </li>
               {!isAuthenticated && (
                 <li className="bg-clip-text text-white bg-[#FC855B] hover:text-white">
