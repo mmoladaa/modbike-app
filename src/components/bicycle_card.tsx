@@ -44,15 +44,7 @@ const Bicycle_data = () => {
 
   return (
     <div>
-      <Flex
-        w="100vw"
-<<<<<<< HEAD
-        h={{ base: "60vh", lg: "60vh", md: "45vh" }}
-=======
-        h={{ base: "65vh", lg: "67vh", md: "50vh" }}
->>>>>>> f94d60cdf3dd90f0eddff6c6fca758b6c27f36a7
-        overflowY="scroll"
-      >
+      <Flex w="100vw" h={{ base: "60vh", lg: "60vh", md: "45vh" }}>
         {bicycleData?.map((bicycleMap) => (
           <div
             key={bicycleMap.bicycle_ID}
