@@ -154,7 +154,7 @@ const INUSE = ({ bikeID, status,username,lat, lng, userPos}: Props) => {
                 {bikeID}
               </Text>
               <Text as="b" fontSize="xl">
-                {googleDistanceM}
+                {googleDistanceM/10}m.
                 {googleDuration}
               </Text>
           {/* </VStack> */}
