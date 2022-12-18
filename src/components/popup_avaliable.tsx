@@ -142,8 +142,9 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
                             <Text as="b" fontSize="3xl">
                                 {bikeID}
                             </Text>
+                            <br />
                             <Text as="b" fontSize="xl">
-                                {googleDistance}
+                                {googleDistance} 
                                 {googleDuration}
                             </Text>
                             {/* </VStack> */}
