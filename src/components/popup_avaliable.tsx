@@ -31,16 +31,23 @@ type Props = {
   lat: number;
   lng: number;
   userPos: LatLngLiteral;
+  fetchBicycleData: () => void;
 };
+
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
 import { useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
 
-function refreshPage() {
-  location.reload();
-}
-const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
+const AVAILABLE = ({
+  bikeID,
+  status,
+  username,
+  lat,
+  lng,
+  userPos,
+  fetchBicycleData,
+}: Props) => {
   const { user, isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
@@ -91,7 +98,7 @@ const AVAILABLE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
       d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
     );
     alert("booking done");
-    refreshPage();
+    fetchBicycleData();
   };
 
   const checkLogin = () => {

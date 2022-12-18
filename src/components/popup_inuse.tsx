@@ -28,15 +28,22 @@ type Props = {
   lat: number;
   lng: number;
   userPos: LatLngLiteral;
+  fetchBicycleData: () => void;
 };
 type LatLngLiteral = google.maps.LatLngLiteral;
 type DirectionsResult = google.maps.DirectionsResult;
 import { useJsApiLoader } from "@react-google-maps/api";
 import { useState } from "react";
-function refreshPage() {
-  location.reload();
-}
-const INUSE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
+
+const INUSE = ({
+  bikeID,
+  status,
+  username,
+  lat,
+  lng,
+  userPos,
+  fetchBicycleData,
+}: Props) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_REACT_APP_GOOGLE_MAPS_API_KEY!,
@@ -86,7 +93,7 @@ const INUSE = ({ bikeID, status, username, lat, lng, userPos }: Props) => {
       d.toISOString().split("T")[0] + " " + d.toTimeString().split(" ")[0]
     );
     alert("return success");
-    refreshPage();
+    fetchBicycleData();
   };
   return (
     <div>
