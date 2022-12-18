@@ -1,9 +1,18 @@
+import { useEffect } from "react";
 import Map from "../components/Map";
 import Bicycle_card from "../components/bicycle_card";
-import { Box } from "@chakra-ui/react";
+import checkGeoLocation from "../hooks/checkGeoLocation";
+import DeniedComponent from "../components/deniedComponent";
+import NotSupportedComponent from "../components/notSupportedComponent";
+import LoadingSpinner from "../components/loadingSpinner";
 
 const Home = () => {
-  return (
+  let locationPermissionStatus = checkGeoLocation();
+
+  useEffect(() => {
+    checkGeoLocation;
+  }, []);
+  return locationPermissionStatus === "granted" ? (
     <div>
       <div className="">
         <div className="z-0">
@@ -18,6 +27,18 @@ const Home = () => {
         </div>
       </div>
       <div className="inset-x-0 bottom-0 fixed rounded-none w-full h-72 bg-gradient-to-t from-[#A4DFFA]"></div>
+    </div>
+  ) : locationPermissionStatus === "denied" ? (
+    <div>
+      <DeniedComponent />
+    </div>
+  ) : locationPermissionStatus === "not supported" ? (
+    <div>
+      <NotSupportedComponent />
+    </div>
+  ) : (
+    <div>
+      <LoadingSpinner />
     </div>
   );
 };
