@@ -91,6 +91,9 @@ const Map = () => {
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(10, 10),
               }}
+              onClick={() => {
+                alert("Bicycle ID: " + marker.bicycle_ID + "\nStatus: " + marker.status);
+              }}
             />
           ) : marker.status == "inuse" ? (
             <Marker
@@ -105,6 +108,9 @@ const Map = () => {
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(10, 10),
               }}
+              onClick={() => {
+                alert("Bicycle ID: " + marker.bicycle_ID + "\nStatus: " + marker.status);
+              }}
             />
           ) : marker.status == "booked" ? (
             <Marker
@@ -118,6 +124,9 @@ const Map = () => {
                 scaledSize: new window.google.maps.Size(25, 25),
                 origin: new window.google.maps.Point(0, 0),
                 anchor: new window.google.maps.Point(10, 10),
+              }}
+              onClick={() => {
+                alert("Bicycle ID: " + marker.bicycle_ID + "\nStatus: " + marker.status);
               }}
             />
           ) : (
