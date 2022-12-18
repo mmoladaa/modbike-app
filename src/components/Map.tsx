@@ -92,7 +92,17 @@ const Map = () => {
                 anchor: new window.google.maps.Point(10, 10),
               }}
               onClick={() => {
-                alert("Bicycle ID: " + marker.bicycle_ID + "\nStatus: " + marker.status);
+                map.panTo({
+                  lat: parseFloat(marker.lat),
+                  lng: parseFloat(marker.lng),
+                });
+                map.setZoom(18);
+                alert(
+                  "Bicycle ID: " +
+                    marker.bicycle_ID +
+                    "\nStatus: " +
+                    marker.status
+                );
               }}
             />
           ) : marker.status == "inuse" ? (
@@ -109,7 +119,17 @@ const Map = () => {
                 anchor: new window.google.maps.Point(10, 10),
               }}
               onClick={() => {
-                alert("Bicycle ID: " + marker.bicycle_ID + "\nStatus: " + marker.status);
+                map.panTo({
+                  lat: parseFloat(marker.lat),
+                  lng: parseFloat(marker.lng),
+                });
+                map.setZoom(18);
+                alert(
+                  "Bicycle ID: " +
+                    marker.bicycle_ID +
+                    "\nStatus: " +
+                    marker.status
+                );
               }}
             />
           ) : marker.status == "booked" ? (
@@ -126,7 +146,17 @@ const Map = () => {
                 anchor: new window.google.maps.Point(10, 10),
               }}
               onClick={() => {
-                alert("Bicycle ID: " + marker.bicycle_ID + "\nStatus: " + marker.status);
+                map.panTo({
+                  lat: parseFloat(marker.lat),
+                  lng: parseFloat(marker.lng),
+                });
+                map.setZoom(18);
+                alert(
+                  "Bicycle ID: " +
+                    marker.bicycle_ID +
+                    "\nStatus: " +
+                    marker.status
+                );
               }}
             />
           ) : (
@@ -143,10 +173,12 @@ const Map = () => {
             anchor: new window.google.maps.Point(10, 10),
           }}
           onClick={() => {
+            useGeoLocation;
             map.panTo({
               lat: userLocation.position.lat,
               lng: userLocation.position.lng,
             });
+            map.setZoom(18);
           }}
         />
       </GoogleMap>
@@ -154,6 +186,7 @@ const Map = () => {
         <img
           src="reset.svg"
           onClick={() => {
+            useGeoLocation;
             map.panTo({
               lat: userLocation.position.lat,
               lng: userLocation.position.lng,
