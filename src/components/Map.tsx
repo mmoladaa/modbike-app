@@ -51,7 +51,7 @@ const Map = () => {
 
   const fetchGPSData = async () => {
     const resultAwait = await axios.get(
-      "http://54.79.142.76:8000/bicycle_data.php"
+      "http://54.79.142.76:3000/bicycle_data.php"
     );
     setMarkers(resultAwait.data.bicycle_data);
   };
