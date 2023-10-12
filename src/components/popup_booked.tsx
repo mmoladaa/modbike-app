@@ -54,7 +54,7 @@ const INUSE = ({
   const d = new Date();
   const retrieve = () => {
     if (googleDistanceM <= 150) {
-      const url = "http://54.79.142.76:3000/edit_data.php";
+      const url = "https://54.79.142.76:3000/edit_data.php";
       let fData = new FormData();
       fData.append("bicycle_id", bikeID);
       fData.append("bicycle_status", "inuse");
