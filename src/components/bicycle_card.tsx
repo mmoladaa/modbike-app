@@ -24,7 +24,7 @@ const Bicycle_data = () => {
 
   const fetchBicycleData = async () => {
     const resultAwait = await axios.get(
-      "https://54.79.142.76:3000/bicycle_data.php"
+      "https://54.79.142.76.sslip.io/bicycle_data.php"
     );
     setBicycleData(resultAwait.data.bicycle_data);
     {

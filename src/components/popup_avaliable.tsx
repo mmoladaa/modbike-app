@@ -60,7 +60,7 @@ const AVAILABLE = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const d = new Date();
   const passstatus = () => {
-    const url = "https://54.79.142.76:3000/edit_data.php";
+    const url = "https://54.79.142.76.sslip.io/edit_data.php";
     let fData = new FormData();
     fData.append("bicycle_id", bikeID);
     fData.append("bicycle_status", "booked");
