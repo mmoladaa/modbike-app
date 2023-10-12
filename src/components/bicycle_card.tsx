@@ -24,7 +24,7 @@ const Bicycle_data = () => {
 
   const fetchBicycleData = async () => {
     const resultAwait = await axios.get(
-      "https://iot.encall.space/bicycle_data.php"
+      "http://54.79.142.76:8000/bicycle_data.php"
     );
     setBicycleData(resultAwait.data.bicycle_data);
     {
