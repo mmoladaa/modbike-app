@@ -1,6 +1,3 @@
-## Modbike App
-
-```markdown
 # Modbike App
 
 An interactive web application designed to manage and track bike rentals and services.
